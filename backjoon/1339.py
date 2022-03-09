@@ -20,10 +20,10 @@ def DFS_backtracking(idx):
     if idx == len(alphabets):
         result = 0
         for word in words_list:
-            word_to_num = 0
+            word_to_num = ""
             for i in range(len(word)):
-                word_to_num += alphabet_to_num[word[i]] * 10 ** (len(word)-i-1)
-            result += word_to_num
+                word_to_num += str(alphabet_to_num[word[i]])
+            result += int(word_to_num)
         results_list.append(result)
         return
 
