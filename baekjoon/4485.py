@@ -34,14 +34,20 @@ problem_number = 1
 n = int(sys.stdin.readline())
 
 while n!=0:
+    # 시작 노드 번호
     start = 0
-    distance = [float("inf")] * (n*n)
-    graph = [[] for _ in range(n*n)]
+    # 최단 거리 테이블을 모두 무한으로 초기화
+    distance = [float("inf")] * (n*n) 
+    # 각 노드에 연결되어 있는 노드에 대한 정보를 담는 리스트 만들기
+    graph = [[] for _ in range(n*n)] # 
 
+    # 입력받기
     cave = list()
     for _ in range(n):
         cave.append(list(map(int, sys.stdin.readline().strip().split(" "))))
 
+    # 동굴의 사방에 있는 node를 graph 배열에 넣음
+    # 동굴은 2차원 배열, graph는 1차원 배열이므로 둘 사이의 다음과 같은 식으로 inddex를 변환
     for i in range(n):
         for j in range(n):
             node = i*n+j
@@ -50,6 +56,7 @@ while n!=0:
             if j-1>=0 : graph[node].append((n*i+(j-1), cave[i][j-1]))
             if j+1<n : graph[node].append((n*i+(j+1), cave[i][j+1]))
 
+    # 최단거리 찾아서 최종 최단거리 테이블 구하기
     result_distance = dijkstra(start, distance, graph)
 
     # 처음 시작 노드 비용 + 마지막 노드 비용
