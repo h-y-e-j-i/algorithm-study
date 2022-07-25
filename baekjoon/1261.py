@@ -6,9 +6,6 @@ from collections import deque
 import heapq
 import sys
 
-
-
-
 m, n = list(map(int, sys.stdin.readline().split(" ")))
 dxs = [0, 0, 1, -1]
 dys = [1, -1,0, -0]
