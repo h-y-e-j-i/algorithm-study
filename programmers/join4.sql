@@ -1,0 +1,5 @@
+-- https://school.programmers.co.kr/learn/courses/30/lessons/59045#fn1
+-- 보호소에서 중성화한 동물
+-- JOIN
+
+SELECT AO.ANIMAL_ID, AO.ANIMAL_TYPE, AO.NAME FROM ANIMAL_OUTS AS AO LEFT JOIN ANIMAL_INS AS AI ON AI.ANIMAL_ID=AO.ANIMAL_ID WHERE AI.SEX_UPON_INTAKE LIKE "%Intact%" AND (AO.SEX_UPON_OUTCOME LIKE "%Spayed%" OR AO.SEX_UPON_OUTCOME LIKE "%Neutered%")
