@@ -1,61 +1,48 @@
-def BFS(matrix, start_node, n):
-    visit = list()
+def BFS(graph, start_node, n):
+    visited = list()
     queue = list()
-    node_count = list()
-    all_node = list()
-
-
-    for i in range(n):
-        all_node.append(i)
-    
-    final_node_count = 0
+    node_distance = [0 for _ in range(n)] 
 
     queue.append(start_node)
-    all_node.remove(start_node)
-    node_count.append(1)
+    node_distance[start_node] += 1
 
-    not_visit = all_node
- 
-    while queue:       
+    while queue or len(visited)<n:       
         node = queue.pop(0) 
-        node_count[0] -= 1
-        next_node_count = 0
 
-        if node not in visit:
-            visit.append(node)
-            for i in not_visit:
-                if matrix[node][i]==1 and i not in queue:
-                    queue.append(i)
-                    matrix[node][i] = 0
-                    matrix[i][node] = 0
-                    next_node_count+=1
-            not_visit = list(set(all_node)-set(visit))
+        if node not in visited:            
+            visited.append(node)          
+            
+            for next_node in graph[node]:
+                if node_distance[next_node] == 0:
+                    queue.append(next_node)
+                    node_distance[next_node] = node_distance[node]+1
 
-            if len(node_count) <= 1:
-                node_count.append(next_node_count)  
-            else:
-                node_count[1] += next_node_count 
+            # for i in graph[node] :
+            #     if i not in queue and i not in visited:
+            #         queue.append(i) 
+            #         add_node_count += 1
 
-        if not queue :
-            return final_node_count   
-        elif node_count[0] == 0 :
-            #node_count.append(len(graph[node]))
-            node_count.pop(0)             
-            final_node_count = node_count[0]
+    count = 0
+    print(node_distance)
+    for dis in node_distance:
+        if dis == max(node_distance):
+            count += 1           
       
-    return final_node_count
+    return count
 
-def make_matrix(n, vertex):
-    matrix = [[0 for _ in range(n)] for _ in range(n)]
-
-    for v1, v2 in vertex:
-        matrix[v1-1][v2-1] = 1
-        matrix[v2-1][v1-1] = 1
-    return matrix
+def make_graph(n, results):
+    graph = dict()
+    for i in range(n):
+        graph[i] = list()
+    
+    for n1, n2 in results:
+        graph[n1-1].append(n2-1)
+        graph[n2-1].append(n1-1)
+    return graph
 
 
 def solution(n, vertex):
-    matrix = make_matrix(n, vertex)
+    matrix = make_graph(n, vertex)
     answer = BFS(matrix, 0, n)
     return answer
 print(solution(6, [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]	))
