@@ -1,9 +1,9 @@
--- https://school.programmers.co.kr/learn/courses/30/lessons/59411
--- 오랜 기간 보호한 동물(2)
+-- https://school.programmers.co.kr/learn/courses/30/lessons/59414
+-- DATETIME에서 DATE로 형 변환
 -- String, Date
 /*
-    DATEDIFF, TIMESTAMPIDFF 사용하기
-    https://extbrain.tistory.com/78
+    date_format() 사용하기
+    https://lightblog.tistory.com/155
 */
 
-SELECT AI.ANIMAL_ID, AI.NAME FROM ANIMAL_INS AS AI INNER JOIN ANIMAL_OUTS AS AO ON AI.ANIMAL_ID=AO.ANIMAL_ID ORDER BY DATEDIFF(AO.DATETIME, AI.DATETIME) DESC LIMIT 2  
+SELECT ANIMAL_ID, NAME, date_format(DATETIME, "%Y-%m-%d") FROM ANIMAL_INS ORDER BY ANIMAL_ID
