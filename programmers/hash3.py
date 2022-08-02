@@ -1,24 +1,9 @@
-def solution(clothes):
-    answer = 0
-    clothes_dict = dict()
+def solution(phone_book):
+    phone_book.sort()
+    for phone_number, tartget_phone_number in zip(phone_book, phone_book[1:]):
+        if len(phone_number)<=1 or len(tartget_phone_number) <=1:
+            pass
+        elif phone_number.startswith(tartget_phone_number) or tartget_phone_number.startswith(phone_number):return False
+    return True
 
-    for clothes_name, clothes_type in clothes:
-        if clothes_type not in clothes_dict.keys():
-            clothes_dict[clothes_type] = list()
-        clothes_dict[clothes_type].append(clothes_name)
-
-    clothes_count = [0 for _ in range(len(clothes_dict.keys()))]
-    index = 0
-    for clothes_type in clothes_dict.keys():
-        clothes_count[index] = len(clothes_dict[clothes_type])
-        index += 1
-    
-    for clothes_count_index in range(len(clothes_count)):
-        clothes_match_count = clothes_count[clothes_count_index]
-        for target_clothes_count_index in range(clothes_count_index+1, len(clothes_count)):
-            clothes_match_count *= (clothes_count[target_clothes_count_index]+1)
-        answer += clothes_match_count
-    
-    return answer
-
-print(solution([["crowmask", "face"], ["bluesunglasses", "face"], ["smoky_makeup", "face"]]))
+print(solution(["12","123","1235","567","88"]))
