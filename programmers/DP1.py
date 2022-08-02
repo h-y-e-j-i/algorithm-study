@@ -1,20 +1,40 @@
-#(재귀-메모이제이션) 피보나치
+import math
+def DP(N, number):
 
-d= [0]*100 # 한번 계산한 결과 메모이제이션(저장)하기 위한 리스트 미리 초기화
+    if number==0 : return 0
 
-def cal(num, loop):
-    count = 0
+    fibo = dict()
+    fibo[0] = [0]
 
-    if loop<=0 : return 0
-    if d[loop]!=0 : return d[loop]
+    for i in range(1, 9):        
+        case_set = set()
+        for case_A in range(1, i):
+            case_B = i-case_A
+            for A in fibo[case_A]:
+                for B in fibo[case_B]:            
+                    case_set.add(A+B)
+                    case_set.add(A-B)
+                    case_set.add(A*B)                          
+                    if B > 0:
+                        case_set.add(A//B)
+        
+        num = 0
+        for j in range(i):
+            num += N*math.pow(10,j) 
+        case_set.add(num)
 
-    for i in range(loop):
-        d[i] = cal(num, loop-1)+cal(num, loop-2)
-        if d[i] == 12 : count += 1
-    return d[loop]
+        if number in case_set:
+            return i
+        fibo[i] = list(case_set)
+        
+    return -1
 
+def solution(N, number):
+    return DP(N, number)
 
-print(cal([1, 5, 25, 55], 8))
-
-
-
+if __name__=="__main__":
+    #print(solution(1, 11111))
+    print(solution(4, 17))
+    # print(solution(5,5550))
+    # solution(2, 11)
+    
