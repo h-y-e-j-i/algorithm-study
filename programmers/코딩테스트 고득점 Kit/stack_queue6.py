@@ -1,3 +1,6 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/12909?language=python3
+# 올바른 괄호
+
 def solution(s):
     s_list = list(map(str, s))
 
