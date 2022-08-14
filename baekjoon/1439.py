@@ -12,7 +12,7 @@ for idx in range(len(num)-1):
 if num[-2] != num[-1]:
     count[num[-1]] += 1
 else:
-    count[num[2]] += 1
+    count[num[-2]] += 1
 
 print(min(count))
 
