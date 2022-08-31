@@ -9,3 +9,4 @@ for _ in range(t):
 
     for se in s:
         for _ in range(r) : print(se, end="")
+    print()
