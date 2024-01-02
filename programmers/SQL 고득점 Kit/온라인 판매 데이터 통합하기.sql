@@ -1,0 +1,47 @@
+-- 코드를 입력하세요
+WITH OFFLINE_SALE_AGG AS(
+    SELECT
+        DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE,
+        PRODUCT_ID,
+        NULL AS USER_ID,
+        SUM(SALES_AMOUNT) AS SALES_AMOUNT
+    FROM
+        OFFLINE_SALE
+    GROUP BY
+        1, 2, 3
+), ONLINE_SALE_AGG AS (
+    SELECT
+        DATE_FORMAT(SALES_DATE, '%Y-%m-%d') AS SALES_DATE,
+        PRODUCT_ID,
+        USER_ID,
+        SUM(SALES_AMOUNT) AS SALES_AMOUNT
+    FROM
+        ONLINE_SALE
+    GROUP BY
+        1, 2, 3
+),
+UNION_TABLE AS(
+    SELECT
+        *
+    FROM
+        ONLINE_SALE_AGG
+    UNION
+    SELECT
+        *
+    FROM
+        OFFLINE_SALE_AGG
+)
+SELECT
+    SALES_DATE,
+    PRODUCT_ID,
+    USER_ID,
+    SALES_AMOUNT
+
+FROM
+    UNION_TABLE
+WHERE
+    SALES_DATE BETWEEN '2022-03-01' AND '2022-03-31'
+ORDER BY
+    SALES_DATE,
+    PRODUCT_ID,
+    USER_ID
