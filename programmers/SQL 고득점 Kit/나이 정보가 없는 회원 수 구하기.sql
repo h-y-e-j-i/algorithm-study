@@ -1,0 +1,6 @@
+SELECT
+    COUNT(*)
+FROM
+    USER_INFO
+WHERE
+    AGE IS NULL
