@@ -1,0 +1,32 @@
+WITH CAR_AVAILABILITY AS(
+    SELECT
+        CAR_ID,
+        CASE
+            WHEN
+                '2022-10-16' BETWEEN START_DATE AND END_DATE
+                -- START_DATE>='2022-10-16' AND END_DATE<='2022-10-16'
+            THEN
+                '대여중'
+            ELSE
+                '대여 가능'
+        END AS AVAILABILITY
+    FROM
+        CAR_RENTAL_COMPANY_RENTAL_HISTORY
+), CAR_AVAILABILITY_RN AS(
+    SELECT
+        CAR_ID,
+        AVAILABILITY,
+        ROW_NUMBER() OVER(PARTITION BY CAR_ID ORDER BY AVAILABILITY DESC) AS RN
+    FROM
+        CAR_AVAILABILITY
+)
+SELECT
+    CAR_ID,
+    AVAILABILITY
+FROM
+    CAR_AVAILABILITY_RN
+WHERE
+    RN=1
+ORDER BY
+    1 DESC
+
